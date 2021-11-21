@@ -87,6 +87,45 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({
+      token: "d5e1c6896a1541838d8f0d94cd989fa0"
+    });
+    // TrackJS.track('Testing TrackJS!');
+    // TrackJS.registerErrorHandler = function () {
+    //   if (window.onerror) {
+    //     var oldError = window.onerror;
+    //     var newErrorHandler = function (errorMessage, url, lineNumber) { TrackJS.reportJSError(errorMessage, url, lineNumber); oldError(errorMessage, url, lineNumber); }
+    //     window.onerror = newErrorHandler;
+    //   }
+    //   else {
+    //     window.onerror = TrackJS.reportJSError;
+    //   }
+
+    window.onerror = function (msg, url, lineNo, columnNo, error) {
+      var string = msg.toLowerCase();
+      var substring = 'script error';
+      if (string.indexOf(substring) > -1) {
+        alert('Script Error: See Browser Console for Detail');
+      } else {
+        var message = [
+          'Message: ' + msg,
+          'URL: ' + url,
+          'Line: ' + lineNo,
+          'Column: ' + columnNo,
+          'Error object: ' + JSON.stringify(error)
+        ].join(' - ');
+
+        alert(message);
+      }
+
+      return false;
+    };
+    TrackJS.track(window.onerror);
+  </script>
+
+
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -95,7 +134,42 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+
+      // Try, Catch, and Finally Block
+      try {
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      }
+      catch (err) {
+        console.log(err);
+      }
+      finally {
+        alert('you made it to finally!');
+      }
+
+      // Throw a regular Error
+      if (isNaN(firstNum) || isNaN(secondNum)) {
+        throw new Error("You entered invalid inputs");
+      }
+
+
+      // Throw a custom Error
+      class customError extends Error {
+        constructor(message) {
+          super(message);
+          this.name = "customError";
+        }
+      }
+
+      function test() {
+        throw new customError("Does this work?");
+      }
+      try {
+        test();
+      }
+      catch (err) {
+        alert(err.name);
+      }
+
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
@@ -191,6 +265,9 @@
     errorBtns[14].addEventListener("click", () => {
       eval(number);
     })
+
+
+
 
   </script>
 </body>
