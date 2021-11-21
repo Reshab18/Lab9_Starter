@@ -90,39 +90,20 @@
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
     window.TrackJS && TrackJS.install({
-      token: "d5e1c6896a1541838d8f0d94cd989fa0"
+      token: "c32316e7e8284733a319d589d9a02b8e"
     });
-    // TrackJS.track('Testing TrackJS!');
-    // TrackJS.registerErrorHandler = function () {
-    //   if (window.onerror) {
-    //     var oldError = window.onerror;
-    //     var newErrorHandler = function (errorMessage, url, lineNumber) { TrackJS.reportJSError(errorMessage, url, lineNumber); oldError(errorMessage, url, lineNumber); }
-    //     window.onerror = newErrorHandler;
-    //   }
-    //   else {
-    //     window.onerror = TrackJS.reportJSError;
-    //   }
 
     window.onerror = function (msg, url, lineNo, columnNo, error) {
-      var string = msg.toLowerCase();
-      var substring = 'script error';
-      if (string.indexOf(substring) > -1) {
-        alert('Script Error: See Browser Console for Detail');
-      } else {
-        var message = [
-          'Message: ' + msg,
-          'URL: ' + url,
-          'Line: ' + lineNo,
-          'Column: ' + columnNo,
-          'Error object: ' + JSON.stringify(error)
-        ].join(' - ');
-
-        alert(message);
-      }
-
-      return false;
+      var message = [
+        'Message: ' + msg,
+        'URL: ' + url,
+        'Line: ' + lineNo,
+        'Column: ' + columnNo,
+        'Error object: ' + JSON.stringify(error)
+      ]
+      alert(message);
     };
-    TrackJS.track(window.onerror);
+
   </script>
 
 
@@ -150,7 +131,6 @@
       if (isNaN(firstNum) || isNaN(secondNum)) {
         throw new Error("You entered invalid inputs");
       }
-
 
       // Throw a custom Error
       class customError extends Error {
@@ -258,9 +238,6 @@
     errorBtns[14].addEventListener("click", () => {
       eval(number);
     })
-
-
-
 
   </script>
 </body>
